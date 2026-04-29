@@ -3,7 +3,12 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 
-export default function EnquireModal({ isOpen, onClose }) {
+type EnquireModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export default function EnquireModal({ isOpen, onClose }: EnquireModalProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,11 +24,13 @@ export default function EnquireModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
@@ -44,7 +51,7 @@ export default function EnquireModal({ isOpen, onClose }) {
       } else {
         alert("❌ Something went wrong");
       }
-    } catch (err) {
+    } catch (error) {
       alert("❌ Error submitting form");
     }
 
@@ -70,7 +77,7 @@ export default function EnquireModal({ isOpen, onClose }) {
           {/* CLOSE BUTTON */}
           <button
             onClick={onClose}
-            className="absolute right-5 top-5 text-gray-500"
+            className="absolute right-5 top-5 text-gray-500 hover:text-black"
           >
             <X size={26} />
           </button>
@@ -153,7 +160,7 @@ export default function EnquireModal({ isOpen, onClose }) {
             <button
               type="submit"
               disabled={loading}
-              className="mt-4 w-full rounded-lg bg-blue-600 py-3 text-white font-semibold"
+              className="mt-4 w-full rounded-lg bg-blue-600 py-3 text-white font-semibold hover:bg-blue-700"
             >
               {loading ? "Submitting..." : "Submit"}
             </button>
